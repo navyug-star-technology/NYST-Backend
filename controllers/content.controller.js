@@ -1,0 +1,4 @@
+import { defaultContent } from "../default-content.js";
+import { json, readJson, error } from "../middleware/http.js";
+export async function getContent(_req, res, { content }) { const item = await content.findOne({ _id: "published" }); json(res, 200, item?.value || defaultContent); }
+export async function saveContent(req, res, { content, validateContent }) { const value = await readJson(req); if (!value || Array.isArray(value) || typeof value !== "object") throw error("Website content must be a JSON object."); if (JSON.stringify(value).length > 200000) throw error("Website content must be 200 KB or smaller.", 413); validateContent(value); await content.updateOne({ _id: "published" }, { $set: { value, updatedAt: new Date(), updatedBy: process.env.ADMIN_EMAIL } }, { upsert: true }); json(res, 200, { saved: true }); }

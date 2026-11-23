@@ -1,0 +1,17 @@
+{
+  "name": "navyug-star-backend",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file=.env server.js",
+    "start": "node --env-file=.env server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "mongodb": "^7.9.1",
+    "nodemailer": "^10.6.1"
+  }
+}
